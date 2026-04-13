@@ -1,0 +1,79 @@
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+
+body {
+  height: 100vh;
+  background: linear-gradient(to right, #f5f7fa, #e4ecf7);
+  background: url('https://images.unsplash.com/photo-1498050108023-c5249f4df085') no-repeat center center/cover;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+.container {
+  text-align: center;
+  background: #ffffff;
+  padding: 40px 60px;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+
+.logo img {
+  width: 180px;
+  margin-bottom: 20px;
+}
+
+
+.content h1 {
+  font-size: 28px;
+  color: #1a2a44;
+  margin-bottom: 10px;
+}
+
+.content p {
+  color: #6c7a89;
+  margin-bottom: 30px;
+}
+
+
+.buttons {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+}
+
+.btn {
+  text-decoration: none;
+  padding: 12px 25px;
+  border-radius: 8px;
+  font-weight: 600;
+  transition: 0.3s ease;
+}
+
+
+.login {
+  background-color: #1a2a44;
+  color: white;
+}
+
+.login:hover {
+  background-color: #0f1b30;
+}
+
+
+.register {
+  background-color: #4da3ff;
+  color: white;
+}
+
+.register:hover {
+  background-color: #2f8ae6;
+}

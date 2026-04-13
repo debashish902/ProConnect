@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Register - ProConnect</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="theme.css"/>
+  <script src="theme.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy: #0A1628;
+      --accent: #2563EB;
+      --accent-light: #EFF6FF;
+      --surface: #FFFFFF;
+      --bg: #F1F4F9;
+      --text: #0F172A;
+      --muted: #64748B;
+      --border: #E2E8F0;
+      --green: #16A34A;
+      --red: #DC2626;
+      --orange: #EA580C;
+      --radius: 12px;
+    }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .register-card {
+      background: var(--surface);
+      border-radius: 20px;
+      box-shadow: 0 20px 60px rgba(10,22,40,0.12);
+      padding: 40px 36px;
+      max-width: 440px;
+      width: 100%;
+      animation: fadeUp 0.5s ease;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .logo {
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--navy);
+      text-align: center;
+      margin-bottom: 6px;
+    }
+
+    .subtitle {
+      text-align: center;
+      color: var(--muted);
+      font-size: 14px;
+      margin-bottom: 28px;
+    }
+
+    .field {
+      margin-bottom: 18px;
+    }
+
+    .field label {
+      display: block;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 6px;
+    }
+
+    .field input {
+      width: 100%;
+      padding: 11px 14px;
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      font-size: 14px;
+      font-family: inherit;
+      color: var(--text);
+      background: var(--bg);
+      transition: all 0.2s;
+      outline: none;
+    }
+
+    .field input:focus {
+      border-color: var(--accent);
+      background: var(--surface);
+      box-shadow: 0 0 0 3px rgba(37,99,235,0.1);
+    }
+
+    .field input.error {
+      border-color: var(--red);
+      background: #FEF2F2;
+    }
+
+    .field input.success {
+      border-color: var(--green);
+      background: #F0FDF4;
+    }
+
+    .error-msg {
+      font-size: 12px;
+      color: var(--red);
+      margin-top: 5px;
+      min-height: 16px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .success-msg {
+      font-size: 12px;
+      color: var(--green);
+      margin-top: 5px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    
+    .strength-bar-bg {
+      width: 100%;
+      height: 5px;
+      background: var(--border);
+      border-radius: 10px;
+      margin-top: 8px;
+      overflow: hidden;
+    }
+
+    .strength-bar {
+      height: 100%;
+      border-radius: 10px;
+      transition: width 0.3s ease, background 0.3s ease;
+      width: 0%;
+    }
+
+    .strength-label {
+      font-size: 12px;
+      margin-top: 4px;
+      font-weight: 600;
+    }
+
+    .strength-weak { background: var(--red); }
+    .strength-medium { background: var(--orange); }
+    .strength-strong { background: var(--green); }
+
+    .strength-text-weak { color: var(--red); }
+    .strength-text-medium { color: var(--orange); }
+    .strength-text-strong { color: var(--green); }
+
+    .password-reqs {
+      margin-top: 8px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px 12px;
+    }
+
+    .password-req {
+      font-size: 11px;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      transition: color 0.2s;
+    }
+
+    .password-req.met {
+      color: var(--green);
+    }
+
+    .req-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--border);
+      transition: background 0.2s;
+      flex-shrink: 0;
+    }
+
+    .password-req.met .req-dot {
+      background: var(--green);
+    }
+
+    
+    .submit-btn {
+      width: 100%;
+      padding: 13px;
+      border: none;
+      border-radius: 12px;
+      background: var(--accent);
+      color: #fff;
+      font-size: 15px;
+      font-weight: 600;
+      font-family: inherit;
+      cursor: pointer;
+      transition: all 0.2s;
+      margin-top: 8px;
+    }
+
+    .submit-btn:hover:not(:disabled) {
+      background: #1D4ED8;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(37,99,235,0.3);
+    }
+
+    .submit-btn:disabled {
+      background: #94A3B8;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+
+    .login-link {
+      text-align: center;
+      margin-top: 20px;
+      font-size: 14px;
+      color: var(--muted);
+    }
+
+    .login-link a {
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .login-link a:hover {
+      text-decoration: underline;
+    }
+
+    .back-link {
+      position: fixed;
+      top: 24px;
+      left: 24px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 20px;
+      border-radius: 24px;
+      background: var(--surface);
+      color: var(--text);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 600;
+      font-family: inherit;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      border: 1px solid var(--border);
+      transition: all 0.2s;
+      z-index: 10;
+    }
+
+    .back-link:hover {
+      background: var(--accent);
+      color: #fff;
+      border-color: var(--accent);
+      transform: translateX(-2px);
+      box-shadow: 0 4px 12px rgba(37,99,235,0.25);
+    }
+
+    .back-link svg {
+      width: 16px;
+      height: 16px;
+      fill: currentColor;
+      transition: transform 0.2s;
+    }
+
+    .back-link:hover svg {
+      transform: translateX(-3px);
+    }
+
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 12px 24px;
+      border-radius: 24px;
+      font-size: 14px;
+      font-weight: 500;
+      z-index: 999;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s;
+      font-family: inherit;
+    }
+
+    .toast.show { opacity: 1; }
+    .toast.success { background: #065F46; color: #fff; }
+    .toast.error { background: #991B1B; color: #fff; }
+  </style>
+</head>
+
+<body>
+
+  <a href="index.html" class="back-link">
+    <svg viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+    Back
+  </a>
+  <button class="theme-toggle-btn light-nav" onclick="ProConnectTheme.toggle()" title="Toggle theme" style="position:fixed;top:24px;right:24px;z-index:10;">
+    <svg class="theme-icon-sun" viewBox="0 0 24 24"><path d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zM2 13h2c.55 0 1-.45 1-1s-.45-1-1-1H2c-.55 0-1 .45-1 1s.45 1 1 1zm18 0h2c.55 0 1-.45 1-1s-.45-1-1-1h-2c-.55 0-1 .45-1 1s.45 1 1 1zM11 2v2c0 .55.45 1 1 1s1-.45 1-1V2c0-.55-.45-1-1-1s-1 .45-1 1zm0 18v2c0 .55.45 1 1 1s1-.45 1-1v-2c0-.55-.45-1-1-1s-1 .45-1 1zM5.99 4.58a.996.996 0 00-1.41 0 .996.996 0 000 1.41l1.06 1.06c.39.39 1.03.39 1.41 0s.39-1.03 0-1.41L5.99 4.58zm12.37 12.37a.996.996 0 00-1.41 0 .996.996 0 000 1.41l1.06 1.06c.39.39 1.03.39 1.41 0a.996.996 0 000-1.41l-1.06-1.06zm1.06-10.96a.996.996 0 000-1.41.996.996 0 00-1.41 0l-1.06 1.06c-.39.39-.39 1.03 0 1.41s1.03.39 1.41 0l1.06-1.06zM7.05 18.36a.996.996 0 000-1.41.996.996 0 00-1.41 0l-1.06 1.06c-.39.39-.39 1.03 0 1.41s1.03.39 1.41 0l1.06-1.06z"/></svg>
+    <svg class="theme-icon-moon" viewBox="0 0 24 24"><path d="M12 3a9 9 0 109 9c0-.46-.04-.92-.1-1.36a5.389 5.389 0 01-4.4 2.26 5.403 5.403 0 01-3.14-9.8c-.44-.06-.9-.1-1.36-.1z"/></svg>
+  </button>
+
+<div class="register-card">
+  <h1 class="logo">ProConnect</h1>
+  <p class="subtitle">Create your professional account</p>
+
+  <form id="registerForm" onsubmit="event.preventDefault(); handleRegister();">
+
+    <div class="field">
+      <label for="name">Full Name</label>
+      <input id="name" type="text" placeholder="John Doe" oninput="validateName()">
+      <div class="error-msg" id="name-error"></div>
+    </div>
+
+    <div class="field">
+      <label for="username">Username</label>
+      <input id="username" type="text" placeholder="john_doe" oninput="validateUsername()">
+      <div class="error-msg" id="username-error"></div>
+    </div>
+
+    <div class="field">
+      <label for="email">Email Address</label>
+      <input id="email" type="text" placeholder="john@example.com" oninput="validateEmail()">
+      <div class="error-msg" id="email-error"></div>
+    </div>
+
+    <div class="field">
+      <label for="password">Password</label>
+      <input id="password" type="password" placeholder="Create a strong password" oninput="validatePassword()">
+      <div class="strength-bar-bg">
+        <div class="strength-bar" id="strength-bar"></div>
+      </div>
+      <div class="strength-label" id="strength-label"></div>
+      <div class="password-reqs">
+        <div class="password-req" id="req-length"><span class="req-dot"></span> 6+ characters</div>
+        <div class="password-req" id="req-upper"><span class="req-dot"></span> Uppercase</div>
+        <div class="password-req" id="req-lower"><span class="req-dot"></span> Lowercase</div>
+        <div class="password-req" id="req-number"><span class="req-dot"></span> Number</div>
+        <div class="password-req" id="req-special"><span class="req-dot"></span> Special char</div>
+      </div>
+    </div>
+
+    <button type="submit" class="submit-btn" id="submit-btn" disabled>Create Account</button>
+  </form>
+
+  <p class="login-link">Already have an account? <a href="login.html">Sign In</a></p>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+  const validations = {
+    name: false,
+    username: false,
+    email: false,
+    password: false
+  };
+
+  function updateSubmitBtn() {
+    const btn = document.getElementById('submit-btn');
+    const allValid = Object.values(validations).every(v => v);
+    btn.disabled = !allValid;
+  }
+
+  function setFieldState(inputId, errorId, isValid, message) {
+    const input = document.getElementById(inputId);
+    const error = document.getElementById(errorId);
+
+    if (input.value === '') {
+      input.classList.remove('error', 'success');
+      error.textContent = '';
+      return;
+    }
+
+    if (isValid) {
+      input.classList.remove('error');
+      input.classList.add('success');
+      error.textContent = '';
+    } else {
+      input.classList.remove('success');
+      input.classList.add('error');
+      error.textContent = '⚠ ' + message;
+    }
+  }
+
+  
+  function validateName() {
+    const name = document.getElementById('name').value.trim();
+
+    if (!name) {
+      validations.name = false;
+      setFieldState('name', 'name-error', false, 'Name is required');
+    } else if (/\d/.test(name)) {
+      validations.name = false;
+      setFieldState('name', 'name-error', false, 'Name must not contain numbers');
+    } else if (name.length < 2) {
+      validations.name = false;
+      setFieldState('name', 'name-error', false, 'Name must be at least 2 characters');
+    } else {
+      validations.name = true;
+      setFieldState('name', 'name-error', true, '');
+    }
+
+    updateSubmitBtn();
+  }
+
+  
+  function validateUsername() {
+    const username = document.getElementById('username').value.trim();
+    const regex = /^[a-zA-Z_.]{3,}$/;
+
+    if (!username) {
+      validations.username = false;
+      setFieldState('username', 'username-error', false, 'Username is required');
+    } else if (/\d/.test(username)) {
+      validations.username = false;
+      setFieldState('username', 'username-error', false, 'Username must not contain numbers');
+    } else if (!regex.test(username)) {
+      validations.username = false;
+      setFieldState('username', 'username-error', false, 'Only letters, underscores, and dots allowed (min 3 chars)');
+    } else {
+      validations.username = true;
+      setFieldState('username', 'username-error', true, '');
+    }
+
+    updateSubmitBtn();
+  }
+
+  
+  function validateEmail() {
+    const email = document.getElementById('email').value.trim();
+    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (!email) {
+      validations.email = false;
+      setFieldState('email', 'email-error', false, 'Email is required');
+    } else if (!regex.test(email)) {
+      validations.email = false;
+      setFieldState('email', 'email-error', false, 'Please enter a valid email address');
+    } else {
+      validations.email = true;
+      setFieldState('email', 'email-error', true, '');
+    }
+
+    updateSubmitBtn();
+  }
+
+  
+  function validatePassword() {
+    const password = document.getElementById('password').value;
+    const bar = document.getElementById('strength-bar');
+    const label = document.getElementById('strength-label');
+
+    const hasLength = password.length >= 6;
+    const hasUpper = /[A-Z]/.test(password);
+    const hasLower = /[a-z]/.test(password);
+    const hasNumber = /\d/.test(password);
+    const hasSpecial = /[!@#$%^&*(),.?":{}|<>_\-+=\[\]\\\/~`]/.test(password);
+
+    
+    toggleReq('req-length', hasLength);
+    toggleReq('req-upper', hasUpper);
+    toggleReq('req-lower', hasLower);
+    toggleReq('req-number', hasNumber);
+    toggleReq('req-special', hasSpecial);
+
+    
+    let score = 0;
+    if (hasLength) score++;
+    if (hasUpper) score++;
+    if (hasLower) score++;
+    if (hasNumber) score++;
+    if (hasSpecial) score++;
+    if (password.length >= 8) score++;
+
+    
+    bar.className = 'strength-bar';
+    label.className = 'strength-label';
+
+    if (password.length === 0) {
+      bar.style.width = '0%';
+      label.textContent = '';
+      validations.password = false;
+    } else if (score <= 2) {
+      bar.style.width = '30%';
+      bar.classList.add('strength-weak');
+      label.classList.add('strength-text-weak');
+      label.textContent = '🔴 Weak password';
+      validations.password = false;
+    } else if (score <= 4) {
+      bar.style.width = '60%';
+      bar.classList.add('strength-medium');
+      label.classList.add('strength-text-medium');
+      label.textContent = '🟡 Medium strength';
+      validations.password = hasLength;
+    } else {
+      bar.style.width = '100%';
+      bar.classList.add('strength-strong');
+      label.classList.add('strength-text-strong');
+      label.textContent = '🟢 Strong password';
+      validations.password = true;
+    }
+
+    updateSubmitBtn();
+  }
+
+  function toggleReq(id, met) {
+    const el = document.getElementById(id);
+    if (met) {
+      el.classList.add('met');
+    } else {
+      el.classList.remove('met');
+    }
+  }
+
+  
+  async function handleRegister() {
+    const name = document.getElementById('name').value.trim();
+    const username = document.getElementById('username').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const password = document.getElementById('password').value;
+
+    const btn = document.getElementById('submit-btn');
+    btn.disabled = true;
+    btn.textContent = 'Creating Account...';
+
+    try {
+      const res = await fetch('/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, username, email, password })
+      });
+
+      const data = await res.json();
+
+      if (res.ok) {
+        showToast('Account created! Redirecting to login...', 'success');
+        setTimeout(() => {
+          window.location.href = 'login.html';
+        }, 1500);
+      } else {
+        showToast(data.message || 'Registration failed', 'error');
+        btn.disabled = false;
+        btn.textContent = 'Create Account';
+      }
+    } catch (err) {
+      showToast('Server error. Please try again.', 'error');
+      btn.disabled = false;
+      btn.textContent = 'Create Account';
+    }
+  }
+
+  function showToast(msg, type) {
+    const toast = document.getElementById('toast');
+    toast.textContent = msg;
+    toast.className = 'toast ' + type + ' show';
+    setTimeout(() => toast.classList.remove('show'), 3000);
+  }
+</script>
+
+</body>
+</html>

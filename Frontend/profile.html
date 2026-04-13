@@ -1,0 +1,856 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Profile — ProConnect</title>
+  <meta name="description" content="View and manage your professional profile on ProConnect">
+  <link rel="stylesheet" href="style_profile.css">
+  <link rel="stylesheet" href="theme.css"/>
+  <script src="theme.js"></script>
+</head>
+<body>
+
+
+<nav class="navbar">
+  <a class="nav-logo" href="home.html">Pro<span style="color:#000;">Connect</span></a>
+  <div class="nav-actions">
+    <a class="nav-btn" href="home.html">
+      <svg fill="currentColor" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>Home
+    </a>
+    <a class="nav-btn" href="connections.html">
+      <svg fill="currentColor" viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>My Network
+    </a>
+    <a class="nav-btn" href="dashboard.html">
+      <svg fill="currentColor" viewBox="0 0 24 24"><path d="M20 6h-4V4c0-1.11-.89-2-2-2h-4c-1.11 0-2 .89-2 2v2H4c-1.11 0-1.99.89-1.99 2L2 19c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2zm-6 0h-4V4h4v2z"/></svg>Jobs
+    </a>
+    <a class="nav-btn active">
+      <svg fill="currentColor" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>Me
+    </a>
+    <button class="theme-toggle-btn light-nav" onclick="ProConnectTheme.toggle()" title="Toggle theme">
+      <svg class="theme-icon-sun" viewBox="0 0 24 24"><path d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zM2 13h2c.55 0 1-.45 1-1s-.45-1-1-1H2c-.55 0-1 .45-1 1s.45 1 1 1zm18 0h2c.55 0 1-.45 1-1s-.45-1-1-1h-2c-.55 0-1 .45-1 1s.45 1 1 1zM11 2v2c0 .55.45 1 1 1s1-.45 1-1V2c0-.55-.45-1-1-1s-1 .45-1 1zm0 18v2c0 .55.45 1 1 1s1-.45 1-1v-2c0-.55-.45-1-1-1s-1 .45-1 1zM5.99 4.58a.996.996 0 00-1.41 0 .996.996 0 000 1.41l1.06 1.06c.39.39 1.03.39 1.41 0s.39-1.03 0-1.41L5.99 4.58zm12.37 12.37a.996.996 0 00-1.41 0 .996.996 0 000 1.41l1.06 1.06c.39.39 1.03.39 1.41 0a.996.996 0 000-1.41l-1.06-1.06zm1.06-10.96a.996.996 0 000-1.41.996.996 0 00-1.41 0l-1.06 1.06c-.39.39-.39 1.03 0 1.41s1.03.39 1.41 0l1.06-1.06zM7.05 18.36a.996.996 0 000-1.41.996.996 0 00-1.41 0l-1.06 1.06c-.39.39-.39 1.03 0 1.41s1.03.39 1.41 0l1.06-1.06z"/></svg>
+      <svg class="theme-icon-moon" viewBox="0 0 24 24"><path d="M12 3a9 9 0 109 9c0-.46-.04-.92-.1-1.36a5.389 5.389 0 01-4.4 2.26 5.403 5.403 0 01-3.14-9.8c-.44-.06-.9-.1-1.36-.1z"/></svg>
+    </button>
+    <div style="position:relative;">
+      <div class="nav-avatar" id="nav-avatar" onclick="toggleDropdown()">?</div>
+      <div class="dropdown" id="dropdown">
+        <div class="dropdown-item" onclick="openEditModal()">✏️ Edit Profile</div>
+        <div class="dropdown-item" onclick="window.location.href='home.html'">🏠 Go to Home</div>
+        <div class="dropdown-divider"></div>
+        <div class="dropdown-item" onclick="doSignOut()">🚪 Sign Out</div>
+      </div>
+    </div>
+  </div>
+</nav>
+
+
+<div class="page-layout">
+
+  
+  <div class="main-column">
+
+   
+    <div class="profile-card">
+      
+      <div class="cover-banner">
+        <button class="cover-banner-camera" title="Change cover photo">📷</button>
+      </div>
+
+      
+      <div class="profile-avatar-wrapper">
+        <div class="profile-avatar-large" id="profile-avatar-large" onclick="document.getElementById('profilePicInput').click()">?</div>
+        <div class="avatar-change-hint" onclick="document.getElementById('profilePicInput').click()">📷</div>
+        <input type="file" id="profilePicInput" accept="image/*" style="display:none" onchange="uploadProfilePic(this)">
+      </div>
+
+      
+      <div style="position:absolute;top:216px;right:24px;z-index:6;">
+        <button class="section-action-btn" onclick="openEditModal()" title="Edit intro">✏️</button>
+      </div>
+
+      
+      <div class="profile-info-section">
+        <div class="profile-info-left">
+          <h1 class="profile-name-large" id="profile-name">Loading...</h1>
+          <p class="profile-headline-large" id="profile-headline"></p>
+          <div class="profile-location-row">
+            <span class="profile-location-item" id="profile-location" style="display:none;">
+              <span id="location-text"></span>
+            </span>
+            <span id="location-separator" style="display:none;color:var(--muted);">·</span>
+            <a class="contact-info-link" onclick="scrollToContact()" id="contact-info-trigger" style="display:none;">Contact info</a>
+          </div>
+          <div id="connections-link-row" style="margin-top:4px;">
+            <a class="profile-connections-link" id="stat-connections-link">0 connections</a>
+          </div>
+        </div>
+        <div class="profile-info-right">
+          <div class="school-info" id="school-info" style="display:none;">
+            <div class="school-icon">🏫</div>
+            <span id="school-name"></span>
+          </div>
+        </div>
+      </div>
+
+      
+      <div class="profile-actions-row">
+        <button class="btn-primary" onclick="window.location.href='home.html'">Open to</button>
+        <button class="btn-secondary" onclick="openEditModal()">Add section</button>
+        <button class="btn-secondary" onclick="openEditModal()">Enhance profile</button>
+        <button class="btn-icon-only" onclick="doSignOut()" title="More actions">⋯</button>
+      </div>
+
+      
+      <div class="suggestions-banner" id="suggestions-banner">
+        <div class="suggestion-item">
+          <div class="suggestion-text">
+            <strong>Share that you're hiring</strong> and attract qualified candidates.
+            <br><a class="suggestion-cta" href="home.html">Get started</a>
+          </div>
+          <button class="close-suggestion" onclick="this.parentElement.remove()">✕</button>
+        </div>
+        <div class="suggestion-item">
+          <div class="suggestion-text">
+            <strong>Showcase your services</strong> as a section on your profile so your business can be easily discovered.
+            <br><a class="suggestion-cta" onclick="openEditModal()">Add services</a>
+          </div>
+          <button class="close-suggestion" onclick="this.parentElement.remove()">✕</button>
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="section-card" id="suggested-section" style="display:none;">
+      <div class="section-header">
+        <div class="section-title">Suggested for you</div>
+      </div>
+      <div class="section-body" style="padding-bottom:8px;">
+        <p style="font-size:13px;color:var(--muted);">🔒 Private to you</p>
+      </div>
+    </div>
+
+   
+    <div class="section-card" id="activity-section">
+      <div class="section-header">
+        <div class="section-title">
+          Activity
+          <span style="font-size:13px;font-weight:400;color:var(--muted);margin-left:4px;" id="activity-count"></span>
+        </div>
+        <div class="section-header-actions">
+          <a class="suggestion-cta" href="home.html">Create a post</a>
+        </div>
+      </div>
+      <div class="section-body" id="activity-list">
+        <div class="empty-state">
+          <div class="empty-state-icon">📝</div>
+          <div>Loading posts...</div>
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="section-card" id="experience-section" style="display:none;">
+      <div class="section-header">
+        <div class="section-title">Experience</div>
+        <div class="section-header-actions">
+          <button class="section-action-btn" onclick="openEditModal()" title="Add experience">+</button>
+          <button class="section-action-btn" onclick="openEditModal()" title="Edit experience">✏️</button>
+        </div>
+      </div>
+      <div class="section-body" id="experience-list"></div>
+    </div>
+
+    
+    <div class="section-card" id="education-section" style="display:none;">
+      <div class="section-header">
+        <div class="section-title">Education</div>
+        <div class="section-header-actions">
+          <button class="section-action-btn" onclick="openEditModal()" title="Add education">+</button>
+          <button class="section-action-btn" onclick="openEditModal()" title="Edit education">✏️</button>
+        </div>
+      </div>
+      <div class="section-body" id="education-list"></div>
+    </div>
+
+    
+    <div class="section-card" id="skills-section" style="display:none;">
+      <div class="section-header">
+        <div class="section-title">Skills</div>
+        <div class="section-header-actions">
+          <button class="section-action-btn" onclick="this.closest('.section-card').querySelector('.close-suggestion')?.click()">✕</button>
+        </div>
+      </div>
+      <div class="section-body">
+        <div class="skills-grid" id="skills-grid"></div>
+      </div>
+    </div>
+
+    
+    <div class="section-card" id="about-section" style="display:none;">
+      <div class="section-header">
+        <div class="section-title">About</div>
+        <div class="section-header-actions">
+          <button class="section-action-btn" onclick="openEditModal()" title="Edit about">✏️</button>
+        </div>
+      </div>
+      <div class="section-body">
+        <p class="about-text" id="about-text"></p>
+      </div>
+    </div>
+
+  </div>
+
+  
+  <div class="sidebar-column">
+
+    
+    <div class="sidebar-card">
+      <div class="sidebar-card-title">
+        Profile language
+        <button class="sidebar-edit-btn" onclick="openEditModal()">✏️</button>
+      </div>
+      <div class="sidebar-card-subtitle">English</div>
+    </div>
+
+    
+    <div class="sidebar-card">
+      <div class="sidebar-card-title">
+        Public profile & URL
+        <button class="sidebar-edit-btn" onclick="openEditModal()">✏️</button>
+      </div>
+      <div class="sidebar-card-subtitle" id="public-url">
+        <a href="#">www.proconnect.com/in/user</a>
+      </div>
+    </div>
+
+   
+    <div class="viewers-card">
+      <div class="viewers-title">Who your viewers also viewed</div>
+      <div class="viewers-subtitle">Private to you</div>
+      <div id="viewers-list">
+        
+      </div>
+      <div class="show-all-link" id="show-all-viewers" style="display:none;">
+        Show all →
+      </div>
+    </div>
+
+    
+    <div class="analytics-card">
+      <div class="analytics-title">📊 Profile Analytics</div>
+      <div class="analytics-grid">
+        <div class="analytics-item">
+          <div class="analytics-value blue" id="analytics-views">0</div>
+          <div class="analytics-label">Profile Views</div>
+        </div>
+        <div class="analytics-item">
+          <div class="analytics-value green" id="analytics-posts">0</div>
+          <div class="analytics-label">Posts</div>
+        </div>
+        <div class="analytics-item">
+          <div class="analytics-value gold" id="analytics-connections">0</div>
+          <div class="analytics-label">Connections</div>
+        </div>
+        <div class="analytics-item">
+          <div class="analytics-value purple" id="analytics-impressions">0</div>
+          <div class="analytics-label">Impressions</div>
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="contact-card" id="contact-card">
+      <div class="contact-title">Contact Information</div>
+      <div class="contact-item">
+        <div class="contact-icon email">📧</div>
+        <div>
+          <div class="contact-label">Email</div>
+          <div class="contact-value" id="contact-email">—</div>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon user">👤</div>
+        <div>
+          <div class="contact-label">Username</div>
+          <div class="contact-value" id="contact-username">—</div>
+        </div>
+      </div>
+      <div class="contact-item" id="contact-website-row" style="display:none;">
+        <div class="contact-icon web">🌐</div>
+        <div>
+          <div class="contact-label">Website</div>
+          <div class="contact-value" id="contact-website">—</div>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon date">📅</div>
+        <div>
+          <div class="contact-label">Member Since</div>
+          <div class="contact-value" id="contact-joined">—</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+
+<div class="modal-overlay" id="edit-modal">
+  <div class="modal">
+    <h2>Edit Profile</h2>
+
+    <label>Headline</label>
+    <input id="edit-headline" placeholder="e.g. Software Engineer at Google">
+
+    <label>Location</label>
+    <input id="edit-location" placeholder="e.g. Bengaluru, India">
+
+    <label>About</label>
+    <textarea id="edit-about" placeholder="Tell people about yourself..."></textarea>
+
+    <label>Current Position</label>
+    <input id="edit-currentPost" placeholder="e.g. Senior Developer">
+
+    <label>Skills (comma separated)</label>
+    <input id="edit-skills" placeholder="e.g. JavaScript, React, Node.js">
+
+    <label>Website</label>
+    <input id="edit-website" placeholder="https://yoursite.com">
+
+    <h3 class="modal-section-title">Work Experience</h3>
+    <label>Company</label><input id="edit-work-company" placeholder="Company name">
+    <label>Position</label><input id="edit-work-position" placeholder="Job title">
+    <label>Years</label><input id="edit-work-years" placeholder="e.g. 2020–Present">
+
+    <h3 class="modal-section-title">Education</h3>
+    <label>School</label><input id="edit-edu-school" placeholder="University name">
+    <label>Degree</label><input id="edit-edu-degree" placeholder="e.g. B.Tech">
+    <label>Field of Study</label><input id="edit-edu-field" placeholder="e.g. Computer Science">
+
+    <div class="modal-actions">
+      <button class="btn-outline" onclick="closeEditModal()">Cancel</button>
+      <button class="btn-primary" onclick="saveProfile()">Save Changes</button>
+    </div>
+  </div>
+</div>
+
+
+<div class="toast" id="toast"></div>
+
+<script>
+const token = localStorage.getItem('token');
+if (!token) window.location.href = 'login.html';
+
+
+const urlParams = new URLSearchParams(window.location.search);
+const viewingUserId = urlParams.get('id');
+const isOwnProfile = !viewingUserId;
+
+
+function getInitials(name) {
+  if (!name) return '?';
+  return name.trim().split(' ').map(w => w[0].toUpperCase()).slice(0, 2).join('');
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+function toggleDropdown() {
+  document.getElementById('dropdown').classList.toggle('open');
+}
+
+document.addEventListener('click', e => {
+  if (!e.target.closest('.nav-avatar') && !e.target.closest('#dropdown'))
+    document.getElementById('dropdown').classList.remove('open');
+});
+
+function doSignOut() {
+  localStorage.clear();
+  window.location.href = 'login.html';
+}
+
+function scrollToContact() {
+  document.getElementById('contact-card').scrollIntoView({ behavior: 'smooth' });
+}
+
+
+async function loadProfile() {
+  try {
+    
+    const endpoint = isOwnProfile ? '/api/profile/me' : '/api/profile/' + viewingUserId;
+    const headers = isOwnProfile ? { 'Authorization': 'Bearer ' + token } : {};
+    const res = await fetch(endpoint, { headers });
+    const data = await res.json();
+    const u = data.user || {};
+    const p = data.profile || {};
+    const initials = getInitials(u.name);
+
+   
+    const hasPic = u.profilePicture && u.profilePicture !== 'default.jpg';
+    const avatarLarge = document.getElementById('profile-avatar-large');
+    const navAvatar = document.getElementById('nav-avatar');
+
+    if (hasPic) {
+      avatarLarge.textContent = '';
+      avatarLarge.style.background = 'url(' + u.profilePicture + ') center/cover no-repeat';
+      navAvatar.textContent = '';
+      navAvatar.style.background = 'url(' + u.profilePicture + ') center/cover no-repeat';
+    } else {
+      avatarLarge.textContent = initials;
+      navAvatar.textContent = initials;
+    }
+
+    
+    document.getElementById('profile-name').textContent = u.name || 'User';
+    document.getElementById('profile-headline').textContent = p.headline || p.currentPost || 'ProConnect Member';
+
+    
+    if (p.location) {
+      document.getElementById('profile-location').style.display = 'inline';
+      document.getElementById('location-text').textContent = p.location;
+      document.getElementById('location-separator').style.display = 'inline';
+    }
+
+    
+    document.getElementById('contact-info-trigger').style.display = 'inline';
+
+    
+    const connCount = data.connectionCount || 0;
+    document.getElementById('stat-connections-link').textContent = connCount + ' connection' + (connCount !== 1 ? 's' : '');
+
+    
+    if (p.education && p.education.length > 0) {
+      document.getElementById('school-info').style.display = 'flex';
+      document.getElementById('school-name').textContent = p.education[0].school || '';
+    }
+
+    
+    document.getElementById('public-url').innerHTML =
+      '<a href="#">www.proconnect.com/in/' + (u.username || 'user') + '</a>';
+
+    
+    document.getElementById('analytics-views').textContent = p.profileViews || 0;
+    document.getElementById('analytics-posts').textContent = data.postCount || 0;
+    document.getElementById('analytics-connections').textContent = connCount;
+    document.getElementById('analytics-impressions').textContent = p.postImpressions || 0;
+
+    
+    document.getElementById('contact-email').textContent = u.email || '—';
+    document.getElementById('contact-username').textContent = '@' + (u.username || '—');
+    if (p.website) {
+      document.getElementById('contact-website-row').style.display = 'flex';
+      const url = p.website.startsWith('http') ? p.website : 'https://' + p.website;
+      document.getElementById('contact-website').innerHTML = '<a href="' + url + '" target="_blank">' + p.website.replace(/^https?:\/\//, '') + '</a>';
+    }
+    if (u.createdAt) {
+      document.getElementById('contact-joined').textContent = new Date(u.createdAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+    }
+
+    
+    if (p.about) {
+      document.getElementById('about-section').style.display = 'block';
+      document.getElementById('about-text').textContent = p.about;
+    }
+
+    
+    if (p.pastWork && p.pastWork.length > 0) {
+      document.getElementById('experience-section').style.display = 'block';
+      document.getElementById('experience-list').innerHTML = p.pastWork.map(w => `
+        <div class="timeline-item">
+          <div class="timeline-icon work">💼</div>
+          <div class="timeline-content">
+            <div class="timeline-title">${w.position || 'Position'}</div>
+            <div class="timeline-subtitle">${w.company || 'Company'}</div>
+            <div class="timeline-duration">
+              ${w.years || 'N/A'}
+              ${w.current ? '<span class="current-badge">Current</span>' : ''}
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    
+    if (p.education && p.education.length > 0) {
+      document.getElementById('education-section').style.display = 'block';
+      document.getElementById('education-list').innerHTML = p.education.map(e => `
+        <div class="timeline-item">
+          <div class="timeline-icon edu">🎓</div>
+          <div class="timeline-content">
+            <div class="timeline-title">${e.school || 'School'}</div>
+            <div class="timeline-subtitle">${e.degree || ''}${e.fieldOfStudy ? ' · ' + e.fieldOfStudy : ''}</div>
+            <div class="timeline-duration">
+              ${e.startYear || ''}${e.endYear ? ' – ' + e.endYear : ''}
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    
+    if (p.skills && p.skills.length > 0) {
+      document.getElementById('skills-section').style.display = 'block';
+      document.getElementById('skills-grid').innerHTML = p.skills.map(s =>
+        `<span class="skill-chip">${s}</span>`
+      ).join('');
+    }
+
+    
+    document.getElementById('edit-headline').value = p.headline || '';
+    document.getElementById('edit-location').value = p.location || '';
+    document.getElementById('edit-about').value = p.about || '';
+    document.getElementById('edit-currentPost').value = p.currentPost || '';
+    document.getElementById('edit-skills').value = (p.skills || []).join(', ');
+    document.getElementById('edit-website').value = p.website || '';
+    if (p.pastWork && p.pastWork[0]) {
+      document.getElementById('edit-work-company').value = p.pastWork[0].company || '';
+      document.getElementById('edit-work-position').value = p.pastWork[0].position || '';
+      document.getElementById('edit-work-years').value = p.pastWork[0].years || '';
+    }
+    if (p.education && p.education[0]) {
+      document.getElementById('edit-edu-school').value = p.education[0].school || '';
+      document.getElementById('edit-edu-degree').value = p.education[0].degree || '';
+      document.getElementById('edit-edu-field').value = p.education[0].fieldOfStudy || '';
+    }
+
+    
+    if (!isOwnProfile) {
+      document.title = (u.name || 'User') + ' — ProConnect';
+      
+      document.querySelectorAll('.section-action-btn, .sidebar-edit-btn, .avatar-change-hint, .cover-banner-camera, #profilePicInput').forEach(el => el.style.display = 'none');
+      
+      const avatarLg = document.getElementById('profile-avatar-large');
+      if (avatarLg) { avatarLg.onclick = null; avatarLg.style.cursor = 'default'; }
+      
+      const actionsRow = document.querySelector('.profile-actions-row');
+      if (actionsRow) {
+        actionsRow.innerHTML = `
+          <button class="btn-primary" onclick="connectFromProfile('${u._id}')" id="profile-connect-btn">Connect</button>
+          <button class="btn-secondary" onclick="window.location.href='home.html'">Back to Home</button>
+        `;
+        checkConnectionStatus(u._id);
+      }
+      
+      const sugBanner = document.getElementById('suggestions-banner');
+      if (sugBanner) sugBanner.style.display = 'none';
+      
+      const analyticsCard = document.querySelector('.analytics-card');
+      if (analyticsCard) analyticsCard.style.display = 'none';
+      const viewersCard = document.querySelector('.viewers-card');
+      if (viewersCard) viewersCard.style.display = 'none';
+      const suggestedSection = document.getElementById('suggested-section');
+      if (suggestedSection) suggestedSection.style.display = 'none';
+      
+      const activityActions = document.querySelector('#activity-section .section-header-actions');
+      if (activityActions) activityActions.style.display = 'none';
+      
+      const dropdownItems = document.querySelectorAll('.dropdown-item');
+      dropdownItems.forEach(item => {
+        if (item.textContent.includes('Edit Profile')) item.style.display = 'none';
+      });
+      
+      document.querySelectorAll('.sidebar-card').forEach(card => card.style.display = 'none');
+    }
+
+  } catch (err) {
+    console.error('Profile load error:', err);
+    document.getElementById('profile-name').textContent = localStorage.getItem('userName') || 'User';
+  }
+}
+
+async function checkConnectionStatus(userId) {
+  if (!token) return;
+  try {
+    const [connRes, sentRes, pendRes] = await Promise.all([
+      fetch('/api/connections', { headers: { 'Authorization': 'Bearer ' + token } }),
+      fetch('/api/connections/sent', { headers: { 'Authorization': 'Bearer ' + token } }),
+      fetch('/api/connections/pending', { headers: { 'Authorization': 'Bearer ' + token } })
+    ]);
+    const connData = await connRes.json();
+    const sentData = await sentRes.json();
+    const pendData = await pendRes.json();
+    const btn = document.getElementById('profile-connect-btn');
+    if (!btn) return;
+
+    
+    const isConnected = (connData.connections || []).some(c => {
+      const uid = String(c.userId._id || c.userId);
+      const cid = String(c.connectionId._id || c.connectionId);
+      return uid === String(userId) || cid === String(userId);
+    });
+    if (isConnected) {
+      btn.textContent = '✓ Connected';
+      btn.disabled = true;
+      btn.style.background = '#16A34A';
+      return;
+    }
+
+    
+    const sentPending = (sentData.requests || []).some(r =>
+      String(r.connectionId._id || r.connectionId) === String(userId)
+    );
+    if (sentPending) {
+      btn.textContent = '✓ Pending';
+      btn.disabled = true;
+      btn.style.background = '#64748B';
+      return;
+    }
+
+    
+    const receivedPending = (pendData.requests || []).some(r =>
+      String(r.userId._id || r.userId) === String(userId)
+    );
+    if (receivedPending) {
+      btn.textContent = 'Accept Request';
+      btn.onclick = null;
+      
+      const req = (pendData.requests || []).find(r =>
+        String(r.userId._id || r.userId) === String(userId)
+      );
+      if (req) btn.setAttribute('onclick', `acceptFromProfile('${req._id}')`);
+      return;
+    }
+  } catch (err) { console.error('Error checking connection:', err); }
+}
+
+async function acceptFromProfile(requestId) {
+  const btn = document.getElementById('profile-connect-btn');
+  try {
+    const res = await fetch('/api/connections/' + requestId + '/accept', {
+      method: 'PUT',
+      headers: { 'Authorization': 'Bearer ' + token }
+    });
+    const d = await res.json();
+    if (res.ok) {
+      btn.textContent = '✓ Connected';
+      btn.disabled = true;
+      btn.style.background = '#16A34A';
+      showToast('Connection accepted! 🤝');
+    } else showToast(d.message || 'Failed');
+  } catch (err) { showToast('Error accepting request'); }
+}
+
+async function connectFromProfile(userId) {
+  const btn = document.getElementById('profile-connect-btn');
+  btn.disabled = true; btn.textContent = 'Sending...';
+  try {
+    const res = await fetch('/api/connections/request', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token },
+      body: JSON.stringify({ connectionId: userId })
+    });
+    const d = await res.json();
+    if (res.ok) {
+      btn.textContent = '✓ Pending';
+      btn.style.background = '#64748B';
+      showToast(d.message || 'Connection request sent! 🤝');
+    } else {
+      btn.textContent = d.message || 'Failed';
+      setTimeout(() => { btn.textContent = 'Connect'; btn.disabled = false; }, 2000);
+      showToast(d.message || 'Could not send request');
+    }
+  } catch (err) {
+    btn.textContent = 'Connect'; btn.disabled = false;
+    showToast('Error sending request');
+  }
+}
+
+
+function openEditModal() {
+  if (!isOwnProfile) { showToast('You cannot edit another user\'s profile'); return; }
+  document.getElementById('dropdown').classList.remove('open');
+  document.getElementById('edit-modal').classList.add('open');
+}
+
+function closeEditModal() {
+  document.getElementById('edit-modal').classList.remove('open');
+}
+
+document.getElementById('edit-modal').addEventListener('click', function(e) {
+  if (e.target === this) closeEditModal();
+});
+
+async function saveProfile() {
+  const body = {
+    headline: document.getElementById('edit-headline').value,
+    location: document.getElementById('edit-location').value,
+    about: document.getElementById('edit-about').value,
+    currentPost: document.getElementById('edit-currentPost').value,
+    skills: document.getElementById('edit-skills').value.split(',').map(s => s.trim()).filter(Boolean),
+    website: document.getElementById('edit-website').value,
+    pastWork: [{
+      company: document.getElementById('edit-work-company').value,
+      position: document.getElementById('edit-work-position').value,
+      years: document.getElementById('edit-work-years').value
+    }].filter(w => w.company || w.position),
+    education: [{
+      school: document.getElementById('edit-edu-school').value,
+      degree: document.getElementById('edit-edu-degree').value,
+      fieldOfStudy: document.getElementById('edit-edu-field').value
+    }].filter(e => e.school || e.degree)
+  };
+
+  try {
+    const res = await fetch('/api/profile/me', {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + token
+      },
+      body: JSON.stringify(body)
+    });
+
+    if (res.ok) {
+      showToast('Profile updated successfully! ✨');
+      closeEditModal();
+      loadProfile();
+    } else {
+      const d = await res.json();
+      showToast(d.message || 'Update failed');
+    }
+  } catch (err) {
+    showToast('Error saving profile');
+  }
+}
+
+
+async function uploadProfilePic(input) {
+  if (!input.files || !input.files[0]) return;
+  const fd = new FormData();
+  fd.append('profilePicture', input.files[0]);
+  try {
+    const res = await fetch('/api/profile/picture', {
+      method: 'POST',
+      headers: { 'Authorization': 'Bearer ' + token },
+      body: fd
+    });
+    const d = await res.json();
+    if (res.ok) {
+      showToast('Profile picture updated! 📸');
+      loadProfile();
+    } else {
+      showToast(d.message || 'Upload failed');
+    }
+  } catch (err) {
+    showToast('Error uploading picture');
+  }
+}
+
+
+let currentUserId = null;
+
+function getTimeAgo(d) {
+  const m = Math.floor((Date.now() - new Date(d).getTime()) / 60000);
+  if (m < 1) return 'Just now';
+  if (m < 60) return m + 'm ago';
+  const h = Math.floor(m / 60);
+  if (h < 24) return h + 'h ago';
+  const days = Math.floor(h / 24);
+  if (days < 30) return days + 'd ago';
+  return new Date(d).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+}
+
+function formatPostBody(t) {
+  return t.replace(/#(\w+)/g, '<span style="color:var(--accent);cursor:pointer;">#$1</span>').replace(/\n/g, '<br>');
+}
+
+async function loadUserPosts() {
+  try {
+    let targetUserId = null;
+
+    if (isOwnProfile) {
+      const profileRes = await fetch('/api/profile/me', {
+        headers: { 'Authorization': 'Bearer ' + token }
+      });
+      const profileData = await profileRes.json();
+      currentUserId = profileData.user?._id;
+      targetUserId = currentUserId;
+    } else {
+      targetUserId = viewingUserId;
+    }
+    if (!targetUserId) return;
+
+    const res = await fetch('/api/posts');
+    const data = await res.json();
+    const userPosts = (data.posts || []).filter(p => {
+      const postUserId = p.userId?._id || p.userId;
+      return String(postUserId) === String(targetUserId);
+    });
+
+    const container = document.getElementById('activity-list');
+    const countEl = document.getElementById('activity-count');
+    countEl.textContent = userPosts.length + ' post' + (userPosts.length !== 1 ? 's' : '');
+
+    if (!userPosts.length) {
+      container.innerHTML = `
+        <div class="empty-state">
+          <div class="empty-state-icon">📝</div>
+          <div>${isOwnProfile ? 'You haven\'t posted anything yet.' : 'No posts yet.'}</div>
+          ${isOwnProfile ? '<a href="home.html" style="color:var(--accent);font-weight:600;text-decoration:none;margin-top:8px;display:inline-block;">Create your first post →</a>' : ''}
+        </div>`;
+      return;
+    }
+
+    container.innerHTML = userPosts.map(post => {
+      const u = post.userId || {};
+      const likeCount = post.likedBy ? post.likedBy.length : 0;
+      let mediaHtml = '';
+      if (post.media) {
+        if (post.fileType === 'video') {
+          mediaHtml = `<div class="profile-post-media"><video src="${post.media}" controls></video></div>`;
+        } else if (post.fileType === 'image') {
+          mediaHtml = `<div class="profile-post-media"><img src="${post.media}" alt="Post media"></div>`;
+        }
+      }
+      return `
+        <div class="profile-post-card" id="user-post-${post._id}">
+          <div class="profile-post-header">
+            <div class="profile-post-time">${getTimeAgo(post.createdAt)}</div>
+            ${isOwnProfile ? `<button class="profile-post-delete" onclick="deleteUserPost('${post._id}')" title="Delete post">🗑️</button>` : ''}
+          </div>
+          ${post.body ? '<div class="profile-post-body">' + formatPostBody(post.body) + '</div>' : ''}
+          ${mediaHtml}
+          <div class="profile-post-footer">
+            <span class="profile-post-stat">👍 ${likeCount} ${likeCount === 1 ? 'reaction' : 'reactions'}</span>
+          </div>
+        </div>`;
+    }).join('');
+  } catch (err) {
+    console.error('Error loading user posts:', err);
+    document.getElementById('activity-list').innerHTML = '<div class="empty-state">Could not load posts</div>';
+  }
+}
+
+async function deleteUserPost(postId) {
+  if (!confirm('Delete this post? This cannot be undone.')) return;
+  try {
+    const res = await fetch('/api/posts/' + postId, {
+      method: 'DELETE',
+      headers: { 'Authorization': 'Bearer ' + token }
+    });
+    if (res.ok) {
+      showToast('Post deleted');
+      const el = document.getElementById('user-post-' + postId);
+      if (el) el.remove();
+      loadProfile();
+    } else {
+      const d = await res.json();
+      showToast(d.message || 'Failed to delete');
+    }
+  } catch (err) {
+    showToast('Error deleting post');
+  }
+}
+
+
+loadProfile();
+loadUserPosts();
+</script>
+
+</body>
+</html>
