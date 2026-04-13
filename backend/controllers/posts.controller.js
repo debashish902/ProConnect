@@ -1,11 +1,6 @@
 import Post from "../models/posts.model.js";
 import User from "../models/user.model.js";
-import fs from 'fs';
-import path from 'path';
-import { fileURLToPath } from 'url';
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+import { cloudinary } from "../config/cloudinary.js";
 
 export const activeCheck = async (req, res) => {
     return res.status(200).json({ message: "RUNNING" });
@@ -24,7 +19,7 @@ export const createPost = async (req, res) => {
         };
 
         if (req.file) {
-            postData.media = '/uploads/' + req.file.filename;
+            postData.media = req.file.path;
             const ext = req.file.originalname.split('.').pop().toLowerCase();
             if (['jpg','jpeg','png','gif','webp','svg','bmp'].includes(ext)) postData.fileType = 'image';
             else if (['mp4','webm','ogg','mov','avi'].includes(ext)) postData.fileType = 'video';
@@ -73,10 +68,15 @@ export const deletePost = async (req, res) => {
 
         
         if (post.media) {
-            const mediaPath = path.join(__dirname, '..', post.media);
-            if (fs.existsSync(mediaPath)) {
-                fs.unlinkSync(mediaPath);
-            }
+            try {
+                const urlParts = post.media.split('/');
+                const fileWithExt = urlParts[urlParts.length - 1];
+                const folder = urlParts[urlParts.length - 2];
+                const publicId = folder + '/' + fileWithExt.split('.')[0];
+                const ext = fileWithExt.split('.').pop().toLowerCase();
+                const resourceType = ['mp4','webm','ogg','mov','avi'].includes(ext) ? 'video' : 'image';
+                await cloudinary.uploader.destroy(publicId, { resource_type: resourceType });
+            } catch (e) { console.log('Cloudinary delete error:', e.message); }
         }
 
         
@@ -107,7 +107,7 @@ export const uploadProfilePic = async (req, res) => {
         if (!req.file) return res.status(400).json({ message: "No file uploaded" });
         const user = await User.findById(req.userId);
         if (!user) return res.status(404).json({ message: "User not found" });
-        user.profilePicture = '/uploads/' + req.file.filename;
+        user.profilePicture = req.file.path;
         await user.save();
         return res.json({ message: "Profile picture updated", profilePicture: user.profilePicture });
     } catch (error) {
@@ -123,10 +123,13 @@ export const deleteProfilePic = async (req, res) => {
 
       
         if (user.profilePicture && user.profilePicture !== 'default.jpg') {
-            const oldPath = path.join(__dirname, '..', user.profilePicture);
-            if (fs.existsSync(oldPath)) {
-                fs.unlinkSync(oldPath);
-            }
+            try {
+                const urlParts = user.profilePicture.split('/');
+                const fileWithExt = urlParts[urlParts.length - 1];
+                const folder = urlParts[urlParts.length - 2];
+                const publicId = folder + '/' + fileWithExt.split('.')[0];
+                await cloudinary.uploader.destroy(publicId);
+            } catch (e) { console.log('Cloudinary delete error:', e.message); }
         }
 
         user.profilePicture = 'default.jpg';

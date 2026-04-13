@@ -2,18 +2,10 @@ import { Router } from "express";
 import { activeCheck, createPost, getAllPosts, getPostById, deletePost, toggleLike, uploadProfilePic, deleteProfilePic } from "../controllers/posts.controller.js";
 import auth from "../middleware/auth.middleware.js";
 import multer from "multer";
-import crypto from "crypto";
-import path from "path";
+import { storage } from "../config/cloudinary.js";
 
 const router = Router();
 
-const storage = multer.diskStorage({
-    destination: (req, file, cb) => cb(null, 'uploads/'),
-    filename: (req, file, cb) => {
-        const unique = crypto.randomBytes(8).toString('hex');
-        cb(null, unique + path.extname(file.originalname));
-    }
-});
 const upload = multer({ storage, limits: { fileSize: 50 * 1024 * 1024 } }); // 50MB
 
 router.route('/').get(activeCheck);
